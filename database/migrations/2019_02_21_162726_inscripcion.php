@@ -15,18 +15,24 @@ class Inscripcion extends Migration
     {
         Schema::create('inscripcion', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('categorias');
+            $table->string('nombre');
+            $table->string('paterno');
+            $table->string('materno');
+            $table->string('dni');
+            $table->string('correo');
+            $table->string('celular');
+            $table->string('iglesia');
             $table->string('disciplina');
-            $table->string('jugadores');
-            $table->string('delegado');
+            $table->string('cantidad');
+            $table->string('archivo');
             $table->string('costo');
+            $table->string('estado');
             $table->rememberToken();
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
+    
+     /* Reverse the migrations.
      *
      * @return void
      */

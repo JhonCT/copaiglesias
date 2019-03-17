@@ -8,24 +8,27 @@
     <link href="{{asset('favicon.ico')}}" rel="shortcut icon" />
     <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css') }}">
     <script type="text/javascript" src="{{asset('js/jquery.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/bootstrap.min.js')}}"></script>    
 </head>
-<body>
+
+<body style="background: url({{asset('/coloradmin/img/depor.jpg')}}) no-repeat center center fixed;background-size: cover;" >
+    <div class="container-fluid">
+    
     <div class="row">
         <div class="col-lg-12">
             <div class="row justify-content-center">
-                <div class="card" style="width: 25rem;"> 
+                <div class="col-sm-4 card" style="font-size: 14px; margin-top: 5%; margin-bottom: 10%;  background-color: rgba(255, 255, 255, 0.85) !important;"> 
                     <div class="card-header">
                         <h4>Datos de la Inscripción</h4>
                         </div>
                         <div class="card-body">
-                        <h4 class="col-sm-6 col-form-label col-form-label-md">DNI del Delegado</h4>
-                        <input class="form-control form-control-sm" type="text" value="{{$pago->delegado}}" readonly="readonly">
-                        <h4 class="col-sm-6 col-form-label col-form-label-md">Categoria</h4>
-                        <input class="form-control form-control-sm" type="text" value="{{$pago->categorias}}" readonly="readonly">
+                        <h4 class="col-sm-6 col-form-label col-form-label-md">Nombre del Delegado</h4>
+                        <input class="form-control form-control-sm" type="text" value="{{$pago->nombre}} {{$pago->paterno}} {{$pago->materno}}" readonly="readonly">
+                        <h4 class="col-sm-6 col-form-label col-form-label-md">Iglesia</h4>
+                        <input class="form-control form-control-sm" type="text" value="{{$pago->iglesia}}" readonly="readonly">
                         <h4 class="col-sm-6 col-form-label col-form-label-md">Disciplinas</h4>
                         <input type="text" class="form-control form-control-sm" value="{{$pago->disciplina}}" readonly="readonly">
-                        <h4 class="col-sm-6 col-form-label col-form-label-md">Costo Final</h4>
+                        <h4 class="col-sm-6 col-form-label col-form-label-md">Costo</h4>
                         <input type="text" class="form-control form-control-sm" value="S/. {{$pago->costo}}" readonly="readonly">
                     </div>
                 
@@ -76,7 +79,8 @@
 							</div>
 						</div>
 					</div>
-				</div>
+                </div>
+                </div>
                 <script type="text/javascript">
                     $( "#target" ).submit(function( event ) {            
                         event.preventDefault();

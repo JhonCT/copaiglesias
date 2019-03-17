@@ -10,7 +10,7 @@
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
   <link href="{{asset('favicon.ico')}}" rel="shortcut icon" />
 
-  <title>Reporte Copa Centenario 2019</title>
+  <title>Reporte Copa Inter-Iglesias 2019</title>
 
   <!-- Bootstrap CSS -->
   <link href="{{asset('/coloradmin/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -91,8 +91,8 @@
               <table class="table table-striped table-advance table-hover">
                 <thead>
                     <tr>
-                    <th><i class="fas fa-user-graduate"></i> &nbsp; Promoción</th>
-                    <th><i class="fas fa-users"></i>  &nbsp; Equipo</th>
+                    <th><i class="fas fa-user-graduate"></i> &nbsp; Iglesia</th>
+                    <th><i class="fas fa-users"></i>  &nbsp; Celular</th>
                     <th><i class="fas fa-futbol"></i> &nbsp; Disciplina</th>
                     <th><i class="fas fa-edit"></i> &nbsp; Ficha de Inscripción</th>
                     <th><i class="fas fa-user-tie"></i> &nbsp; Delegado</th>
@@ -106,11 +106,11 @@
 
                      @foreach ($inscripciones as $inscripcion)
                 <tr>
-                    <td>{{$inscripcion->categorias}}</td>	
-					<td>{{$inscripcion->equipo}}</td>
+                    <td>{{$inscripcion->iglesia}}</td>	
+					          <td>{{$inscripcion->celular}}</td>
                     <td>{{$inscripcion->disciplina}}</td>
-                    <td><a href="../storage/app/{{$inscripcion->jugadores}}" >{{$inscripcion->jugadores}}</a></td>
-                    <td>{{$inscripcion->delegado}}</td>                    
+                    <td><a href="../storage/app/{{$inscripcion->jugadores}}" >{{$inscripcion->archivo}}</a></td>
+                    <td>{{$inscripcion->nombre}} {{$inscripcion->paterno}} {{$inscripcion->materno}}</td>                    
                     <td>{{$inscripcion->correo}}</td>
                     <td>S/. {{$inscripcion->costo}}</td>
                     
@@ -129,13 +129,9 @@
                       </div>
                     </td>
 
-					@endif
-					
-                    
+					@endif				                    
                 </tr>
-            @endforeach
-                  
-                  
+            @endforeach                                    
                 </tbody>
               </table>
             </section>
@@ -163,9 +159,9 @@
 	
 	<script>
 		function eliminar(id){
-			fetch("https://juntos.upeu.edu.pe/copa/public/eliminar/"+id)
+			fetch("http://localhost:8000/eliminar/"+id)
 			.then(data => {
-				window.location.href = "https://juntos.upeu.edu.pe/copa/public/reporte";
+				window.location.href = "{{route('reporte')}}";
 			});
 		}
 		

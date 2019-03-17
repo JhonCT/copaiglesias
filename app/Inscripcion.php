@@ -10,6 +10,6 @@ class Inscripcion extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        '__token', 'nombre', 'paterno', 'materno','dni', 'correo', 'celular', 'iglesia', 'disciplina', 'archivo', 'estado', 'cantidad'
+        '__token', 'nombre', 'paterno', 'materno','dni', 'correo', 'celular', 'iglesia', 'disciplina', 'cantidad', 'archivo', 'costo', 'estado'
     ];
 }
