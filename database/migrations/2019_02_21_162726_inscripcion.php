@@ -26,10 +26,13 @@ class Inscripcion extends Migration
             $table->string('cantidad');
             $table->string('archivo');
             $table->string('costo');
+            $table->string('voucher');
+            $table->string('operacion');
+            $table->string('fecha');
             $table->string('estado');
             $table->rememberToken();
             $table->timestamps();
-        });
+        }); 
     }
     
      /* Reverse the migrations.

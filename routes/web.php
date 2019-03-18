@@ -24,6 +24,7 @@ Route::get('reglamento' , 'InscripcionController@descargarReglamento');
 Route::post('validar', 'Validapago@recepcion')->name('validarpago');  
 Route::post('validarestdo', 'verificarestadopago@verificarestado')->name('verificarestadopago');  
 Route::get('eliminar/{id}', 'InscripcionController@eliminarInscripcion')->name('eliminar');
+Route::post('voucher', 'InscripcionController@subirVoucher')->name('voucher');
 //Route::post('loginReporte', 'InscripcionController@loginReporte')->name('login');
 //PRUEBA DE SERVICIOS
 Route::get('prueba', 'InscripcionController@prueba')->name('prueba');

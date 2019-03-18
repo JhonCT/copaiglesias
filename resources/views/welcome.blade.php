@@ -168,7 +168,7 @@
                 margin-bottom: 5%;
             }
         }
-    </style>
+    </style
 </head>
 
 <body class="login-img3-body">

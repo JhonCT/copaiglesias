@@ -98,6 +98,9 @@
                     <th><i class="fas fa-user-tie"></i> &nbsp; Delegado</th>
                     <th><i class="fas fa-envelope"></i> &nbsp; Email</th>
                     <th><i class="fas fa-hand-holding-usd"></i> &nbsp; Costo</th>
+                    <th><i class="fas fa-hand-holding-usd"></i> &nbsp; N° de Operación</th>
+                    <th><i class="fas fa-hand-holding-usd"></i> &nbsp; Fecha</th>                    
+                    <th><i class="fas fa-hand-holding-usd"></i> &nbsp; Voucher</th>      
                     <th><i class="fas fa-user-cog"></i> &nbsp; Estado</th>
                   </tr>
                  </thead>
@@ -113,6 +116,9 @@
                     <td>{{$inscripcion->nombre}} {{$inscripcion->paterno}} {{$inscripcion->materno}}</td>                    
                     <td>{{$inscripcion->correo}}</td>
                     <td>S/. {{$inscripcion->costo}}</td>
+                    <td>{{$inscripcion->operacion}}</td>
+                    <td>{{$inscripcion->fecha}}</td>
+                    <td><a href="../storage/app/{{$inscripcion->jugadores}}" >{{$inscripcion->voucher}}</a></td>
                     
 					@if ($inscripcion->estado === "inscrito")
     					<td>							

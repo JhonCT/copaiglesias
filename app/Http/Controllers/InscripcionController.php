@@ -72,7 +72,7 @@ class InscripcionController extends Controller
         if ($request->user == "reporte" && $request->pass == "reporte") {
             $inscripciones = Inscripcion::all();
             return view('reporte')->with('inscripciones', $inscripciones);    
-        }else {
+        }else { 
             return redirect('https://www.upeu.edu.pe');
         }
         
@@ -108,7 +108,7 @@ class InscripcionController extends Controller
         return response()->download($pathtoFile);
     }
 
-    //Subir el archivo pdf de reglamento a copa/public/recursos/
+    //Subir el archivo pdf de reglamento a copa/public/recursos/ 
     //Cambiar el archivo ECO-1927.pdf por el archivo pdf del reglamento
     public function descargarReglamento()
     {
@@ -119,6 +119,24 @@ class InscripcionController extends Controller
     public function login(Request $request)
     {
         return view('login');
+    }
+
+    public function subirVoucher(Request $request)
+    {
+        $file = $request->file('file');
+        $nombre = $file->getClientOriginalName();
+        $prefijoArchivo = explode(".", $nombre, 2)[0];
+        $extensionArchivo = explode(".", $nombre, 2)[1];
+        $nombreArchivo = $prefijoArchivo . $request['nombrepago'] . "." . $extensionArchivo;
+
+        \Storage::disk('local')->put($nombreArchivo, \File::get($file));
+                
+        $inscripcion = new inscripcion();
+
+        $inscripcion->select('voucher')
+            ->where('dni', $request->dnipago)
+            ->update(["voucher" => $nombreArchivo, "operacion" => $request->operacion, "fecha" => $request->fecha]);                                        
+        return redirect('/');
     }
 }
 

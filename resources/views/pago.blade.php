@@ -23,26 +23,16 @@
                         </div>
                         <div class="card-body">
                         <h4 class="col-sm-6 col-form-label col-form-label-md">Nombre del Delegado</h4>
-                        <input class="form-control form-control-sm" type="text" value="{{$pago->nombre}} {{$pago->paterno}} {{$pago->materno}}" readonly="readonly">
+                        <input class="form-control form-control-sm" type="text" value="{{$pago->nombre}} {{$pago->paterno}} {{$pago->materno}}" readonly="readonly" id="delegado">
                         <h4 class="col-sm-6 col-form-label col-form-label-md">Iglesia</h4>
                         <input class="form-control form-control-sm" type="text" value="{{$pago->iglesia}}" readonly="readonly">
                         <h4 class="col-sm-6 col-form-label col-form-label-md">Disciplinas</h4>
                         <input type="text" class="form-control form-control-sm" value="{{$pago->disciplina}}" readonly="readonly">
                         <h4 class="col-sm-6 col-form-label col-form-label-md">Costo</h4>
                         <input type="text" class="form-control form-control-sm" value="S/. {{$pago->costo}}" readonly="readonly">
+                        <input type="hidden" value="{{$pago->dni}}" id="dni">
                     </div>
-                
-        
-
-        <!--div class="col-lg-6"-->
-            <!--ul class="nav nav-tabs">
-                <li class="nav-items">
-                    <a href="#tab" data-toggle="tab" class="nav-link active">
-                        <span class="d-sm-none">Pagar con VISA y Mastercard</span>
-                        <span class="d-sm-block d-none">Pagar con VISA y Mastercard</span>
-                    </a>
-                </li>
-            </ul-->
+                    
             <div class="tab-content">
                 <div class="text-left tab-pane fade active show" id="tab">
                     <p style="text-align: center">Verifica que tus datos sean correctos, antes de efectuar el pago.</p>
@@ -62,8 +52,10 @@
                     <input type="hidden" name="id_aplicacion" value="12" autocomplete="off">
                     <input type="hidden" name="moneda" value="0" autocomplete="off">
                     <input type="hidden" name="importe" id="importe" value="{{$pago->costo}}" autocomplete="off">               
-                    <button type="button"  onclick="enviar()" class=" btn btn-primary btn-lg"  style="background-color: #731027; border-color: #731027; margin-left: 40%">Pagar</button>
+                    <button type="button"  onclick="enviar()" class=" btn btn-primary btn-lg"  style="background-color: #731027; border-color: #731027;float:left">Pagar</button>                    
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal" style="background-color: #731027; border-color: #731027; float: right">Subir voucher</button>
                 </form>
+                
 				</div>       
             </div>
                 <div class="modal fade" tabindex="-1" id="modalvisa" role="dialog" aria-hidden="true" aria-labelledby="modalcontrollabel">
@@ -71,7 +63,7 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title" id="modalcontrollabel">Pagos Visa </h5>
-								 <button type="button" class="close" aria-hidden="true" onclick="fncerrarmodalvisa()">x</button>
+								 <button type="button" class="close" aria-hidden="true" onclick="fncerrarmodalvisa()">x</button>                                 
 							</div>
 
 							<div class="modal-body">
@@ -81,7 +73,62 @@
 					</div>
                 </div>
                 </div>
+
+                    <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Subir Voucher</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form accept-charset="UTF-8" action="{{route('voucher')}}" method="POST" enctype="multipart/form-data" id="form">                            
+      <div class="modal-body">
+        
+                            @csrf                       
+                            <input type="hidden" id="nombrepago" name="nombrepago"> 
+                            <input type="hidden" id="dnipago" name="dnipago"> 
+                            <div class="form-group row">
+                                <div class="mx-auto col-lg-11" >
+                                    <h4 class="col-sm-6 col-form-label col-form-label-md">N° de Operación</h4>
+                                    <input type="text" class="form-control form-control-sm" name="operacion">
+                                </div>                                
+                            </div>                    
+                            <div class="form-group row">
+                                <div class="mx-auto col-lg-11" >
+                                    <h4 class="col-sm-6 col-form-label col-form-label-md">Fecha</h4>
+                                    <input type="text" class="form-control form-control-sm" name="fecha">
+                                </div>                                
+                            </div>              
+                            <div class="form-group row">
+                                <h4 class="col-sm-6 col-form-label col-form-label-md" style="margin-left: 11%">Voucher</h4>
+                                <div class="mx-auto col-lg-10">
+                                    <label for="file" class="custom-file-label" id="archivo">Subir voucher de pago</label>
+                                    <input class="custom-file-input" type="file" name="file" id="file" lang="en" onchange="nombreArchivo()" required>
+                                </div>                                
+                            </div>
+                                                                             
+                        
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-lg" style="background-color: #731027; border-color: #731027; float: right">Subir</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
                 <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#nombrepago").val($("#delegado").val());
+                        $("#dnipago").val($("#dni").val());
+                    })
+
                     $( "#target" ).submit(function( event ) {            
                         event.preventDefault();
                     });
@@ -127,7 +174,28 @@
                             frm.submit();
                         }
                         fnmodalvisa();
-                        }		
+                        }		                        
+                    
+                    function nombreArchivo() {
+                            var fileInput = document.getElementById('file');
+                            var filePath = fileInput.value;
+                            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                            if (!allowedExtensions.exec(filePath)) {
+                                alert('Por favor suba el archivo que descargaste previamente, Ejem: (formato.xlsx )');
+                                fileInput.value = '';
+                                return false;
+                            } else {
+                
+                                if (fileInput.files && fileInput.files[0]) {                    
+                                    var reader = new FileReader();
+                                    reader.onload = function(e) {
+                                    document.getElementById("archivo").innerHTML = document.getElementById("file").files[0].name;
+                                };
+                            reader.readAsDataURL(fileInput.files[0]);
+                            }
+                            }
+                    }
+
                 </script>
             </div>
         <!--/div-->
