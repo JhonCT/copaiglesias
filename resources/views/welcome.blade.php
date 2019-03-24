@@ -168,7 +168,7 @@
                 margin-bottom: 5%;
             }
         }
-    </style
+    </style>
 </head>
 
 <body class="login-img3-body">
@@ -226,7 +226,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-2">
-                                            <input class="form-control" type="number" id="flvc" max="10" min="0" onchange="vercantidad(event)" value="0" name="cantidad[]" style="font-size: 14px; display: none" required>
+                                            <input class="form-control" type="number" id="flvc" max="10" min="0" onchange="vercantidad(this)" value="0" name="cantidad[]" style="font-size: 14px; display: none" required>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-check">
@@ -235,7 +235,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-2">
-                                            <input class="form-control" type="number" id="fmvc" max="10" min="0" onchange="vercantidad(event)" value="0" name="cantidad[]" style="font-size: 14px;display: none" required>
+                                            <input class="form-control" type="number" id="fmvc" max="10" min="0" onchange="vercantidad(this)" value="0" name="cantidad[]" style="font-size: 14px;display: none" required>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-check">
@@ -244,7 +244,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-2">
-                                            <input class="form-control" type="number" id="vldc" max="10" min="0" onchange="vercantidad(event)" value="0" name="cantidad[]" style="font-size: 14px;display: none" required>
+                                            <input class="form-control" type="number" id="vldc" max="10" min="0" onchange="vercantidad(this)" value="0" name="cantidad[]" style="font-size: 14px;display: none" required>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -255,7 +255,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-2">
-                                            <input class="form-control" type="number" id="bvc" max="10" min="0" onchange="vercantidad(event)" value="0" name="cantidad[]" style="font-size: 14px;display: none" required>
+                                            <input class="form-control" type="number" id="bvc" max="10" min="0" onchange="vercantidad(this)" value="0" name="cantidad[]" style="font-size: 14px;display: none" required>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-check">
@@ -264,7 +264,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-2">
-                                            <input class="form-control" type="number" id="bdc" max="10" min="0" onchange="vercantidad(event)" value="0" name="cantidad[]" style="font-size: 14px;display: none" required>
+                                            <input class="form-control" type="number" id="bdc" max="10" min="0" onchange="vercantidad(this)" value="0" name="cantidad[]" style="font-size: 14px;display: none" required>
                                         </div>
                                     </div>
                                 </div>
@@ -272,7 +272,7 @@
                             <div class="form-group row">
                                 <label class="col-lg-6 col-form-label form-control-label">Costo</label>
                                 <div class="col-lg-6">
-                                    <input class="form-control" name="costo" value="S/. 0" id="costo" onchange="vercantidad(event)" readonly=”readonly” required>
+                                    <input class="form-control" name="costo" value="S/. 0" id="costo" onchange="vercantidad(this)" readonly=”readonly” required>
                                 </div>
                             </div>
 
@@ -317,8 +317,8 @@
     </div>
 
     <script>
-        function vercantidad() {
-
+        function vercantidad(e) {
+            
             var flvc = $("#flvc").val();
             var fmvc = $("#fmvc").val();
             var bdc = $("#bdc").val();
@@ -326,8 +326,7 @@
             var bvc = $("#bvc").val();
 
             var cantidaddis = parseInt(flvc) + parseInt(fmvc) + parseInt(bdc) + parseInt(vldc) + parseInt(bvc);
-
-
+		
             switch (cantidaddis) {
                 case 0:
                     document.getElementById("costo").value = "S/. 0";
@@ -349,7 +348,11 @@
                     break;
                 default:
                     if (cantidaddis > 5) {
-                        document.getElementById("costo").value = "S/. 390";
+			            var costoDOM = document.getElementById('costo').value;
+		                var x = costoDOM.split(" ");
+	        	        var costo = x[1];
+        		        costo = parseInt(costo);
+                        document.getElementById("costo").value = "S/. " + String(costo + 60);   
                     }
                     break;
             }

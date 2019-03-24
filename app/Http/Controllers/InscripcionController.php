@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Inscripcion;
 use Illuminate\Routing\Controller as Controller;
 use Illuminate\Http\Request;
-
+use DB;
+use function GuzzleHttp\json_decode;
 
 class InscripcionController extends Controller
 {
@@ -14,18 +15,16 @@ class InscripcionController extends Controller
     {
         $disci = [];
         $cantidades = $request['cantidad'];
+        $disciplinas = $request['disciplina'];
+
         $cantidad = 0;
         for ($i = 0; $i < count($cantidades); $i++) {
             if ($cantidades[$i] != "0") {
                 array_push($disci, $cantidades[$i]);
                 $cantidad += $cantidades[$i];
             }
-        }
-
-        $disciplinas = $request['disciplina'];
-
-        $arrayres = array_merge($disciplinas, $disci);
-
+        }                
+        
         //Obteniendo el archivo
         $file = $request->file('file');
         $nombre = $file->getClientOriginalName();
@@ -42,8 +41,9 @@ class InscripcionController extends Controller
 
         $inscripcion->archivo = $nombreArchivo;
 
-        //Conviertiendo el array de disciplinas a a string
-        $inscripcion->disciplina = implode(", ", $arrayres);
+        //Conviertiendo el array de disciplinas a string
+        $inscripcion->disciplina = implode(", ", $disciplinas);
+        $inscripcion->canti_disci = implode(", ", $disci);
 
         //Conviertiendo costo
 
@@ -53,6 +53,9 @@ class InscripcionController extends Controller
         $inscripcion->cantidad = $cantidad;
         $inscripcion->iglesia = "hoa";
         $inscripcion->estado = "sasd";
+        $inscripcion->voucher = "qwe";
+        $inscripcion->operacion = "qwe";
+        $inscripcion->fecha = "qwe";
         $inscripcion->save();
 
         $lastInscripcion = $inscripcion->find($inscripcion->id);
@@ -68,14 +71,9 @@ class InscripcionController extends Controller
     }
 
     public function inscripciones(Request $request)
-    {                   
-        if ($request->user == "reporte" && $request->pass == "reporte") {
-            $inscripciones = Inscripcion::all();
-            return view('reporte')->with('inscripciones', $inscripciones);    
-        }else { 
-            return redirect('https://www.upeu.edu.pe');
-        }
-        
+    {
+        $inscripciones = Inscripcion::all();
+        return view('reporte')->with('inscripciones', $inscripciones);        
     }
 
     //PRUEBA DE SERVICIOS
@@ -97,7 +95,7 @@ class InscripcionController extends Controller
 
     public function downloadFile($file)
     {
-        $pathtoFile = 'https://juntos.upeu.edu.pe/copa/storage/app/' . $file;
+        $pathtoFile = 'storage/app/'.$file;
         return response()->download($pathtoFile);
     }
     //Subir el archivo excel de formato de jugadores a copa/public/recursos/
@@ -130,13 +128,26 @@ class InscripcionController extends Controller
         $nombreArchivo = $prefijoArchivo . $request['nombrepago'] . "." . $extensionArchivo;
 
         \Storage::disk('local')->put($nombreArchivo, \File::get($file));
-                
+
         $inscripcion = new inscripcion();
 
-        $inscripcion->select('voucher')
+        $inscripcion
             ->where('dni', $request->dnipago)
-            ->update(["voucher" => $nombreArchivo, "operacion" => $request->operacion, "fecha" => $request->fecha]);                                        
+            ->update(["voucher" => $nombreArchivo, "operacion" => $request->operacion, "fecha" => $request->fecha]);
         return redirect('/');
+    } 
+
+    public function validarVoucher($id)
+    {
+        $inscripcion = new Inscripcion(); 
+
+        $inscripcion->where('id', $id)->update(["estado" => "inscrito"]);
+        return redirect('reporte');
+    }
+
+    public function buscarInscripcion($dni)
+    {
+        $inscripcion = Inscripcion::where("dni", $dni)->first();        
+        return json_encode($inscripcion);
     }
 }
-

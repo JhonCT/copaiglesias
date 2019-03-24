@@ -23,6 +23,7 @@ class Inscripcion extends Migration
             $table->string('celular');
             $table->string('iglesia');
             $table->string('disciplina');
+            $table->string('canti_disci');
             $table->string('cantidad');
             $table->string('archivo');
             $table->string('costo');
